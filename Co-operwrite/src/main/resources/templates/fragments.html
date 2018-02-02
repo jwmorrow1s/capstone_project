@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:fragment="head">
+    <meta charset="UTF-8"/>
+    <title th:text="${title}">Co-operwrite</title>
+    <!--navigation css-->
+    <link rel="stylesheet" href="navigation.css" />
+    <!--bootstrap css-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
+    <!--bootstrap js-->
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <!--bootstrap jquery-->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!--popper.js necessary for dropdowns-->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+</head>
+<body>
+
+<div th:fragment="navigation">
+    <div class="container-fluid">
+    <nav class="navbar navbar-expand navbar-light bg-dark col">
+        <a class="navbar-brand bg-default" href="#">Co-operWrite</a>
+        <div class="collapse nav nav-tabs navbar-collapse d-flex justify-content-end no-underline">
+            <ul class="navbar-nav">
+                <li>
+                    <a class="nav-link bg-default d-none d-md-flex" href="#">Home </a>
+                </li>
+                <li>
+                    <a class="nav-link bg-default d-none d-md-flex" href="#">Stories</a>
+                </li>
+                <li>
+                    <a class="nav-link bg-default d-none d-md-flex" href="#">Sign-Up</a>
+                </li>
+                <li>
+                    <a class="nav-link bg-default btn-hamburger d-sm-flex d-md-none" data-toggle="collapse" href="#collapseNav"></a>
+                </li>
+            </ul><!--/navbar-nav-->
+        </div>
+        </nav><!--/collapse nav-->
+    </div><!--/container-fluid(0)-->
+    <!--insert-->
+    <!--TODO: finish dropdown and figure out why popper.js is not working-->
+
+    <!--insert-->
+
+</div><!--/th:navigation-->
+
+
+</body>
+</html>

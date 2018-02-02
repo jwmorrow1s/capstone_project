@@ -1,0 +1,21 @@
+body{
+  background-color: hsla(180, 0%, 75%, 1);
+}
+
+.bg-default{
+  color: white !important;
+}
+
+.btn-hamburger::before{
+  color:white;
+  content: "\2630";
+  font-size: 30px;
+}
+
+.no-underline{
+  border:none !important;
+}
+
+.dropdown-toggle::after{
+  display:none;
+}
