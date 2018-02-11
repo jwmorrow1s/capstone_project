@@ -3,7 +3,7 @@ Link to Pivotal Tracker: https://www.pivotaltracker.com/n/projects/2143622
 
 MIT License
 
-Copyright (c) [year] [fullname]
+Copyright (c) [2018] [Jeffrey William Morrow]
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
