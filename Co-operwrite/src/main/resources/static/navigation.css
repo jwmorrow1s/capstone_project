@@ -2,6 +2,16 @@ body{
   background-color: hsla(180, 0%, 75%, 1);
 }
 
+.main-navbar{
+  height: 14vh;
+  font-size: 3vh;
+}
+
+.secondary-navbar{
+  height: 80px;
+  font-size: 3.5vh;
+}
+
 .bg-default{
   color: white !important;
 }
@@ -18,4 +28,21 @@ body{
 
 .dropdown-toggle::after{
   display:none;
+}
+
+.main-content{
+  min-height: 100vh;
+  border: 1px solid black;
+}
+
+.fixed-footer{
+  background-color:black;
+  color:white;
+  margin-left: 15px !important;
+  margin-right: 15px !important;
+  margin-top:1%;
+}
+
+.footer-text{
+    display: flex;
 }

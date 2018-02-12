@@ -2,17 +2,18 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head th:fragment="head">
     <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title th:text="${title}">Co-operwrite</title>
     <!--navigation css-->
     <link rel="stylesheet" href="navigation.css" />
     <!--bootstrap css-->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
-    <!--bootstrap js-->
-    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
     <!--bootstrap jquery-->
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <!--popper.js necessary for dropdowns-->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <!--popper.min.js necessary for dropdowns-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <!--bootstrap js-->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </head>
 <body>
 
@@ -23,25 +24,51 @@
         <div class="collapse nav nav-tabs navbar-collapse d-flex justify-content-end no-underline">
             <ul class="navbar-nav">
                 <li>
-                    <a class="nav-link bg-default d-none d-md-flex" href="#">Home </a>
+                    <a class="nav-link bg-default d-none d-sm-flex" href="#">Home </a>
                 </li>
                 <li>
-                    <a class="nav-link bg-default d-none d-md-flex" href="#">Stories</a>
+                    <a class="nav-link bg-default d-none d-sm-flex" href="#">Stories</a>
                 </li>
                 <li>
-                    <a class="nav-link bg-default d-none d-md-flex" href="#">Sign-Up</a>
+                    <a class="nav-link bg-default d-none d-sm-flex" href="#">Sign-Up</a>
                 </li>
                 <li>
-                    <a class="nav-link bg-default btn-hamburger d-sm-flex d-md-none" data-toggle="collapse" href="#collapseNav"></a>
+                    <a class="nav-link bg-default btn-hamburger d-xs-flex d-sm-none" data-toggle="collapse" href="#collapseNav"></a>
                 </li>
             </ul><!--/navbar-nav-->
         </div>
         </nav><!--/collapse nav-->
     </div><!--/container-fluid(0)-->
-    <!--insert-->
-    <!--TODO: finish dropdown and figure out why popper.js is not working-->
 
-    <!--insert-->
+    <div class="container-fluid d-xs-flex d-sm-none"  id="collapseNav">
+        <div class="collapse nav nav-tabs bg-dark bg-collapse-nav no-underline">
+            <nav class="navbar navbar-expand navbar-light bg-dark col  secondary-navbar">
+                <div class="nav nav-tabs navbar-collapse d-flex no-underline">
+                    <ul class="navbar-nav">
+                        <li class="col">
+                            <a class="nav-link bg-default" href="#">Home </a>
+                        </li>
+                        <li class="col">
+                            <a class="nav-link bg-default" href="#">Stories</a>
+                        </li>
+                        <li class="col">
+                            <a class="nav-link bg-default mr-3 text-nowrap" href="#">Sign-Up</a>
+                        </li>
+                    </ul><!--/navbar-nav-->
+                </div>
+            </nav>
+        </div>
+    </div><!--/container-fluid(1)-->
+
+    <!--footer-->
+
+    <div class="main-content">test</div>
+
+    <div class="nav navbar fixed-footer bg-dark">
+        <span class="footer-text mx-auto"> footer placeholder</span>
+    </div>
+
+    <!--/footer-->
 
 </div><!--/th:navigation-->
 
