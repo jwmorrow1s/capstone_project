@@ -4,6 +4,17 @@
 
 <div th:replace="fragments :: navigation"></div>
 <body>
+    <div class="container">
 
+        <h2 class="mt-5 text-center">Top-Stories</h2>
+        <div class="mt-5 main-content">
+            <div class="text-center no-stories" th:unless="${stories} and ${stories.size()}">
+                No Stories Yet
+            </div>
+        </div>
+        <div th:unless="${login}" th:replace="fragments :: sign-up"></div>
+    </div><!--/container-->
+
+    <div th:replace="fragments :: footer"></div>
 </body>
 </html>

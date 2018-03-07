@@ -30,7 +30,7 @@
                     <a class="nav-link bg-default d-none d-sm-flex" href="#">Stories</a>
                 </li>
                 <li>
-                    <a class="nav-link bg-default d-none d-sm-flex" href="#">Sign-Up</a>
+                    <a class="nav-link bg-default d-none d-sm-flex" href="#">Login</a>
                 </li>
                 <li>
                     <a class="nav-link bg-default btn-hamburger d-xs-flex d-sm-none" data-toggle="collapse" href="#collapseNav"></a>
@@ -52,7 +52,7 @@
                             <a class="nav-link bg-default" href="#">Stories</a>
                         </li>
                         <li class="col">
-                            <a class="nav-link bg-default mr-3 text-nowrap" href="#">Sign-Up</a>
+                            <a class="nav-link bg-default mr-3 text-nowrap" href="#">Login</a>
                         </li>
                     </ul><!--/navbar-nav-->
                 </div>
@@ -60,17 +60,50 @@
         </div>
     </div><!--/container-fluid(1)-->
 
-    <!--footer-->
 
-    <div class="main-content">test</div>
-
-    <div class="nav navbar fixed-footer bg-dark">
-        <span class="footer-text mx-auto"> footer placeholder</span>
-    </div>
-
-    <!--/footer-->
 
 </div><!--/th:navigation-->
+
+<!--footer-->
+
+<div th:fragment="footer">
+    <div class="mt-5 nav navbar fixed-footer bg-dark">
+        <span class="footer-text mx-auto"> footer placeholder</span>
+    </div>
+</div>
+
+
+<!--sign-up-form-->
+<div th:fragment="sign-up">
+    <h2 class="mt-5 text-center">Sign-Up</h2>
+    <div class="mt-5 form-container pb-3">
+        <form class="mt-5" method="POST" th:object="${user}">
+            <div class="form-group col-8">
+                <label th:for="name">Name:</label>
+                <input class="form-control" th:field="*{name}"/>
+                <span  th:errors="*{name}" class="error"></span>
+            </div>
+
+            <div class="form-group col-8">
+                <label th:for="email">Email:</label>
+                <input type="email" class="form-control" th:field="*{email}" />
+                <span  th:errors="*{email}" class="error"></span>
+            </div>
+
+            <div class="form-group col-8">
+                <label th:for="password">Password:</label>
+                <input type="password" class="form-control" th:field="*{password}" />
+                <span  th:errors="*{password}" class="error"></span>
+            </div>
+
+            <input class="sign-up-submit" type="submit" value="Join" />
+        </form>
+    </div><!--/form-container-->
+</div>
+<!--sign-up-form-->
+
+
+<!--/footer-->
 
 
 </body>
