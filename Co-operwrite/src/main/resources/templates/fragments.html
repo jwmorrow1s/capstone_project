@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title th:text="${title}">Co-operwrite</title>
     <!--navigation css-->
-    <link rel="stylesheet" href="navigation.css" />
+    <link rel="stylesheet" th:href="@{/navigation.css}" />
     <!--bootstrap css-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
     <!--bootstrap jquery-->
@@ -24,13 +24,20 @@
         <div class="collapse nav nav-tabs navbar-collapse d-flex justify-content-end no-underline">
             <ul class="navbar-nav">
                 <li>
-                    <a class="nav-link bg-default d-none d-sm-flex" href="#">Home </a>
+                    <a class="nav-link bg-default d-none d-sm-flex" href="/">Home </a>
                 </li>
                 <li>
-                    <a class="nav-link bg-default d-none d-sm-flex" href="#">Stories</a>
+                    <a class="nav-link bg-default d-none d-sm-flex" th:href="@{~/stories}">Stories</a>
                 </li>
-                <li>
-                    <a class="nav-link bg-default d-none d-sm-flex" href="#">Login</a>
+                <li th:unless="${activeUser} and ${activeUser.active}">
+                    <a class="nav-link bg-default d-none d-sm-flex" href="/login">Login</a>
+                </li>
+                <!--TODO
+                    enter a link to a url for the controller
+                    that logs you out. Also below vvv
+                -->
+                <li th:if="${activeUser} and ${activeUser.active}">
+                    <a class="nav-link bg-default d-none d-sm-flex" th:href="@{/logout/}">Logout</a>
                 </li>
                 <li>
                     <a class="nav-link bg-default btn-hamburger d-xs-flex d-sm-none" data-toggle="collapse" href="#collapseNav"></a>
@@ -46,13 +53,16 @@
                 <div class="nav nav-tabs navbar-collapse d-flex no-underline">
                     <ul class="navbar-nav">
                         <li class="col">
-                            <a class="nav-link bg-default" href="#">Home </a>
+                            <a class="nav-link bg-default" href="/">Home </a>
                         </li>
                         <li class="col">
-                            <a class="nav-link bg-default" href="#">Stories</a>
+                            <a class="nav-link bg-default" th:href="@{~/stories}">Stories</a>
                         </li>
-                        <li class="col">
-                            <a class="nav-link bg-default mr-3 text-nowrap" href="#">Login</a>
+                        <li class="col" th:unless="${activeUser} and ${activeUser.active}">
+                            <a class="nav-link bg-default mr-3 text-nowrap" href="/login">Login</a>
+                        </li>
+                        <li class="col" th:if="${activeUser} and ${activeUser.active}">
+                            <a class="nav-link bg-default mr-3 text-nowrap" th:href="@{/logout/}">Logout</a>
                         </li>
                     </ul><!--/navbar-nav-->
                 </div>
@@ -64,13 +74,6 @@
 
 </div><!--/th:navigation-->
 
-<!--footer-->
-
-<div th:fragment="footer">
-    <div class="mt-5 nav navbar fixed-footer bg-dark">
-        <span class="footer-text mx-auto"> footer placeholder</span>
-    </div>
-</div>
 
 
 <!--sign-up-form-->
@@ -102,6 +105,68 @@
 </div>
 <!--sign-up-form-->
 
+<!--login form -->
+<div th:fragment="login">
+    <h2 class="mt-5 text-center">Log In</h2>
+    <div class="mt-5 form-container pb-3">
+        <form class="mt-5" method="POST" th:object="${user}">
+            <div class="form-group col-8">
+                <label th:for="name">Name:</label>
+                <input class="form-control" th:field="*{name}"/>
+                <span  th:errors="*{name}" class="error"></span>
+            </div>
+
+            <div class="form-group col-8">
+                <label th:for="password">Password:</label>
+                <input type="password" class="form-control" th:field="*{password}" />
+                <span  th:errors="*{password}" class="error"></span>
+            </div>
+
+            <input class="sign-up-submit" type="submit" value="Log In" />
+        </form>
+    </div>
+</div>
+<!--/login form -->
+
+<!--stories form -->
+<div th:fragment="stories">
+    <h2 class="mt-5 text-center">New Story</h2>
+    <div class="mt-5 form-container pb-3">
+        <form class="mt-5" method="POST" th:object="${contribution}">
+            <div class="form-group col-8">
+                <label th:for="title">Title:</label>
+                <input class="form-control" th:field="${story.title}"/>
+                <span  th:errors="${story.title}" class="error"></span>
+            </div>
+
+            <div class="form-group col-8">
+                <label th:for="turns">Number of Turns:(Minimum 3)</label>
+                <input class="form-control" th:field="${story.turns}"/>
+                <span  th:errors="${story.turns}" class="error"></span>
+            </div>
+
+            <div class="form-group col-8">
+                <label th:for="contribution">First Entry:</label>
+                <textarea type="text" class="form-control" th:field="*{text}" />
+                <span  th:errors="*{text}" class="error"></span>
+            </div>
+
+            <input class="sign-up-submit" type="submit" value="Start Your Story" />
+        </form>
+    </div>
+</div>
+<!--/stories form -->
+
+
+
+
+<!--footer-->
+
+<div th:fragment="footer">
+    <div class="mt-5 nav navbar fixed-footer bg-dark">
+        <span class="footer-text mx-auto"> footer placeholder</span>
+    </div>
+</div>
 
 <!--/footer-->
 

@@ -1,6 +1,10 @@
 package com.example.Cooperwrite.controllers;
 
+import com.example.Cooperwrite.models.Contribution;
+import com.example.Cooperwrite.models.Story;
 import com.example.Cooperwrite.models.User;
+import com.example.Cooperwrite.models.data.ContributionDao;
+import com.example.Cooperwrite.models.data.StoryDao;
 import com.example.Cooperwrite.models.data.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,16 +19,24 @@ import javax.validation.Valid;
 @RequestMapping(value = "")
 public class IndexController {
 
-    private User activeUser;
+    private User activeUser = null;
 
     @Autowired
     private UserDao userDao;
+
+    @Autowired
+    private ContributionDao contributionDao;
+
+    @Autowired
+    private StoryDao storyDao;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index(Model model){
         //model.addAttribute("users", userDao.findAll());
         model.addAttribute("activeUser", activeUser);
         model.addAttribute(new User());
+        model.addAttribute(new Story());
+        model.addAttribute("contribution", new Contribution());
         return "index/index";
     }
 
@@ -48,22 +60,23 @@ public class IndexController {
         if (errors.hasErrors()) {
             return "index/index";
         }
+        if(activeUser != null) {
+            User oldUser = userDao.findOne(activeUser.getId());
+            activeUser.setActive(false);
+            oldUser.setActive(false);
+        }
         activeUser = newUser;
         newUser.setActive(true);
         userDao.save(newUser);
-        return "redirect:/index/user/" + newUser.getId();
-    }
-
-    @RequestMapping(value = "index/user/{userId}", method = RequestMethod.GET)
-    public String processUser(Model model){
-        model.addAttribute("activeUser", activeUser);
-        return "index/user";
+        return "redirect:/";
     }
 
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String displayLoginForm(Model model) {
         model.addAttribute(new User());
+        model.addAttribute(new Story());
+        model.addAttribute("activeUser", activeUser);
         return "index/login";
     }
 
@@ -74,6 +87,7 @@ public class IndexController {
         for(User u : userDao.findAll()){
             if(checkUser.getName().equals(u.getName())){
                 if(checkUser.getPassword().equals(u.getPassword())){
+                    activeUser = u;
                     u.setActive(true);
                     return "redirect:/";
                 }
@@ -81,7 +95,7 @@ public class IndexController {
             }
             else errors.rejectValue("name", null, "Username doesn't exist.");
         }
-        return "redirect:/index/login";
+        return "index/login";
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
@@ -90,7 +104,38 @@ public class IndexController {
         activeUser.setActive(false);
         dataUser.setActive(false);
         model.addAttribute(new User());
-        return "index/login";
+        return "redirect:/login";
     }
+
+    @RequestMapping(value = "/stories", method = RequestMethod.GET)
+    public String displayStoriesForm(Model model){
+        model.addAttribute("activeUser", activeUser);
+        Story story = new Story();
+        storyDao.save(story);
+        model.addAttribute(new User());
+        model.addAttribute("story", storyDao.findOne((int)storyDao.count()));
+        model.addAttribute(new Contribution());
+        return "index/stories";
+    }
+
+    @RequestMapping(value = "/stories", method = RequestMethod.POST)
+    public String processStoriesForm(@ModelAttribute @Valid Story checkStory, @ModelAttribute @Valid Contribution checkContribution, Errors errors, Model model){
+        User currentUser = userDao.findOne(activeUser.getId());
+        currentUser.addContribution(checkContribution);
+        activeUser = currentUser;
+        contributionDao.save(checkContribution);
+        //storyDao.save(currentStory);
+        userDao.save(currentUser);
+        //try creating a new Story object, populate with checkStory fields. Then addcontribution
+//TODO: figure out how to process this tangled fucking mess
+
+
+        return "index/stories";
+    }
+    /*TODO: Instantiate a new Story() and a new User() and try their respective addContributions()
+            methods to see what the fuck is going on
+    *
+    * */
+
 }
 

@@ -15,7 +15,6 @@ public class User {
     private int id;
 
     @NotNull
-    @Column(unique = true)
     @Size(min=3, max=15)
     private String name;
 
@@ -25,24 +24,25 @@ public class User {
 
     @NotNull
     @Size(min=6, max=15)
-
     private String password;
+
+    @OneToMany
+    @JoinColumn(name = "user_id")
+    private List<Contribution> contributions;
+
+    private Boolean active;
 
     public User(){}
 
-    public User(int id, String name, String email, String password) {
-        this.id = id;
+    public User(String name, String email, String password, Boolean active) {
         this.name = name;
         this.email = email;
         this.password = password;
+        this.active = active;
     }
 
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -68,5 +68,18 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public void addContribution(Contribution contribution){
+        this.contributions.add(contribution);
+    }
+
+    public Boolean isActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
 
 }

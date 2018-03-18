@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+
+<div th:replace="fragments :: navigation"></div>
+<body>
+<div class="container">
+    <h2 class="mt-5 text-center">Top-Stories</h2>
+    <!--Testing-->
+
+    <div class="mt-5 main-content">
+        <div class="text-center no-stories" th:unless="${story} and ${contribution}">
+            No Stories Yet
+        </div>
+    </div>
+    <div th:unless="${activeUser} and ${activeUser.active}">
+        <p class="mt-5 text-center main-content no-stories">Not logged in? Log in <a th:href="@{~/login}">here</a> to start a story.</p>
+    </div>
+    <div th:if="${activeUser} and ${activeUser.active}">
+        <div th:replace="fragments :: stories"></div>
+    </div>
+</div><!--/container-->
+
+<div th:replace="fragments :: footer"></div>
+</body>
+</html>
