@@ -15,12 +15,7 @@
         </div>
     </div>
 -->
-    <div th:unless="${activeUser} and ${activeUser.active}">
-        <div th:replace="fragments :: sign-up"></div>
-    </div>
-    <div th:if="${activeUser} and ${activeUser.active}">
-        <div th:replace="fragments :: stories"></div>
-    </div>
+    <div class="empty-space"></div>
 
 
 </div><!--/container-->

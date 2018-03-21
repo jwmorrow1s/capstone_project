@@ -30,15 +30,17 @@ public class User {
     @JoinColumn(name = "user_id")
     private List<Contribution> contributions;
 
+
     private Boolean active;
+
+    private int turn;
 
     public User(){}
 
-    public User(String name, String email, String password, Boolean active) {
+    public User(String name, String email, String password) {
         this.name = name;
         this.email = email;
         this.password = password;
-        this.active = active;
     }
 
     public int getId() {
@@ -81,5 +83,12 @@ public class User {
         this.active = active;
     }
 
+    public int getTurn(){
+        return turn;
+    }
+
+    public void setTurn(int turn){
+        this.turn = turn;
+    }
 
 }

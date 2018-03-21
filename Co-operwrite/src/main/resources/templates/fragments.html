@@ -45,6 +45,14 @@
             </ul><!--/navbar-nav-->
         </div>
         </nav><!--/collapse nav-->
+        <div th:if="${activeUser}">
+            <h4>Logged in as <span th:text="${activeUser.name}"></span></h4>
+        </div>
+        <div th:if="${activeStory} and ${activeUser}">
+            <div th:if="${activeUser.turn} == ${activeStory.turn}">
+                <a th:href="@{/contribution}">Make Contribution</a>
+            </div><!--TODO-->
+        </div>
     </div><!--/container-fluid(0)-->
 
     <div class="container-fluid d-xs-flex d-sm-none"  id="collapseNav">
@@ -132,7 +140,7 @@
 <div th:fragment="stories">
     <h2 class="mt-5 text-center">New Story</h2>
     <div class="mt-5 form-container pb-3">
-        <form class="mt-5" method="POST" th:object="${contribution}">
+        <form class="mt-5" method="POST">
             <div class="form-group col-8">
                 <label th:for="title">Title:</label>
                 <input class="form-control" th:field="${story.title}"/>
@@ -145,10 +153,23 @@
                 <span  th:errors="${story.turns}" class="error"></span>
             </div>
 
+            <h3 class="ml-5 mt-5 mb-5">Choose Your Co-Authors by Entering their Emails (minimum 2):</h3>
+
+            <div th:each="i : ${#numbers.sequence(1, 6)}">
+                <div class="form-group col-8">
+                    <label th:for="email" >Participant <span th:text="__${i}__"></span></label>
+
+                    <input class="form-control" th:name="email + __${i}__"/>
+                    <span  class="error"></span>
+                </div>
+            </div>
+
+            <h3 class="ml-5 mt-5 mb-5">Begin Your Story:</h3>
+
             <div class="form-group col-8">
-                <label th:for="contribution">First Entry:</label>
-                <textarea type="text" class="form-control" th:field="*{text}" />
-                <span  th:errors="*{text}" class="error"></span>
+                <label th:for="text">Contribution:</label>
+                <textarea class="form-control contrib-text" th:field="${contribution.text}"/>
+                <span  th:errors="${contribution.text}" class="error"></span>
             </div>
 
             <input class="sign-up-submit" type="submit" value="Start Your Story" />

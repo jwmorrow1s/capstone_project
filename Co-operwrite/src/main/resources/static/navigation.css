@@ -63,3 +63,17 @@ body{
 .footer-text{
     display: flex;
 }
+
+.contrib-text{
+  height: 200px;
+}
+
+.story-content{
+   border: 1px solid hsla(0, 20%, 20%, 1);
+   height: 20vh;
+   display: inline-block;
+}
+
+.empty-space{
+   min-height: 50vh;
+}
