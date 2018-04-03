@@ -63,3 +63,29 @@ body{
 .footer-text{
     display: flex;
 }
+
+.empty-space{
+  min-height: 50vh;
+}
+
+.event-clicker{
+  border: 1px solid black;
+  height: 40px;
+  width: 40px;
+  background-color: black;
+  color: white;
+  text-align:center;
+  line-height: 2.5;
+  display:inline-block;
+}
+
+.event-clicker:hover{
+  background-color: white;
+  color:black;
+}
+
+.story-content{
+   border: 1px solid hsla(0, 20%, 20%, 1);
+   height: 20vh;
+   display: inline-block;
+}

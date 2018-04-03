@@ -8,19 +8,8 @@
     <div th:unless="${activeUser} and ${activeUser.active}">
         <div th:replace="fragments :: login"></div>
     </div>
-<!--
-    <div class="mt-5 main-content" th:if="${activeUser} and ${activeUser.active}">
-        <div class="text-center no-stories" th:unless="${story} and ${story.contributions}">
-            You Haven't Written Any Stories Yet
-        </div>
-    </div>
--->
-    <div th:unless="${activeUser} and ${activeUser.active}">
-        <div th:replace="fragments :: sign-up"></div>
-    </div>
-    <div th:if="${activeUser} and ${activeUser.active}">
-        <div th:replace="fragments :: stories"></div>
-    </div>
+
+    <div class="empty-space"></div>
 
 
 </div><!--/container-->

@@ -5,6 +5,7 @@ import org.hibernate.validator.constraints.Email;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -26,11 +27,14 @@ public class User {
     @Size(min=6, max=15)
     private String password;
 
-    @OneToMany
+    //@Transactional?
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
-    private List<Contribution> contributions;
+    private List<Contribution> contributions = new ArrayList<>();
 
     private Boolean active;
+
+    private int turn;
 
     public User(){}
 
@@ -81,5 +85,15 @@ public class User {
         this.active = active;
     }
 
+    public List<Contribution> getContributions(){
+        return this.contributions;
+    }
 
+    public int getTurn(){
+        return turn;
+    }
+
+    public void setTurn(int turn){
+        this.turn = turn;
+    }
 }

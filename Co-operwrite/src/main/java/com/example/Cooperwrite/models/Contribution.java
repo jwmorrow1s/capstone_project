@@ -18,8 +18,10 @@ public class Contribution {
     @ManyToOne
     private User user;
 
-    @Size(max = 160)
+    @Size(max = 500)
     private String text;
+
+    private int cardinality;
 
     public Contribution(){}
 
@@ -39,4 +41,27 @@ public class Contribution {
         this.text = text;
     }
 
+    public Story getStory(){
+        return story;
+    }
+
+    public void setStory(Story story){
+        this.story = story;
+    }
+
+    public User getUser(){
+        return user;
+    }
+
+    public void setUser(User user){
+        this.user = user;
+    }
+
+    public int getCardinality(){
+        return cardinality;
+    }
+
+    public void setCardinality(int cardinality){
+        this.cardinality = cardinality;
+    }
 }

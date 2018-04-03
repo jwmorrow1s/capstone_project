@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
+
 <head th:fragment="head">
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -14,7 +15,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <!--bootstrap js-->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <!--custom script-->
+    <script th:src="@{js/emailFormAjax.js}"></script>
 </head>
+
 <body>
 
 <div th:fragment="navigation">
@@ -32,10 +36,7 @@
                 <li th:unless="${activeUser} and ${activeUser.active}">
                     <a class="nav-link bg-default d-none d-sm-flex" href="/login">Login</a>
                 </li>
-                <!--TODO
-                    enter a link to a url for the controller
-                    that logs you out. Also below vvv
-                -->
+
                 <li th:if="${activeUser} and ${activeUser.active}">
                     <a class="nav-link bg-default d-none d-sm-flex" th:href="@{/logout/}">Logout</a>
                 </li>
@@ -69,6 +70,15 @@
             </nav>
         </div>
     </div><!--/container-fluid(1)-->
+
+    <div th:if="${activeUser} and ${activeUser.active}">
+        <h4>Logged in as <span th:text="${activeUser.name}"></span></h4>
+    </div>
+    <div th:if="${activeStory} and ${activeUser}">
+        <div th:if="${activeUser.turn} == ${activeStory.turn}">
+            <a th:href="@{/contribution}">Make Contribution</a>
+        </div>
+    </div>
 
 
 
@@ -132,7 +142,7 @@
 <div th:fragment="stories">
     <h2 class="mt-5 text-center">New Story</h2>
     <div class="mt-5 form-container pb-3">
-        <form class="mt-5" method="POST" th:object="${contribution}">
+        <form class="mt-5" method="POST">
             <div class="form-group col-8">
                 <label th:for="title">Title:</label>
                 <input class="form-control" th:field="${story.title}"/>
@@ -145,10 +155,32 @@
                 <span  th:errors="${story.turns}" class="error"></span>
             </div>
 
+            <!--nContributors-->
+            <div class="form-group col-8 mt-5">
+                <label >Number of Contributors:</label>
+                <div class="event-clicker"  id="contribDec">-</div>
+                <div class="event-clicker" id="contribInc">+</div>
+            </div>
+            <!--/nContributors-->
+
+            <h3 class="ml-5 mt-5 mb-5">Choose Your Co-Authors by Entering their Emails (minimum 2):</h3>
+
+            <div id="emailEntries">
+                <div th:each="i : ${#numbers.sequence(1, 2)}">
+                    <div class="form-group col-8">
+                        <label th:for="email" th:text="Participant +  ' ' + __${i}__"></label>
+
+                        <input class="form-control" th:name="email + __${i}__"/>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="ml-5 mt-5 mb-5">Begin Your Story:</h3>
+
             <div class="form-group col-8">
-                <label th:for="contribution">First Entry:</label>
-                <textarea type="text" class="form-control" th:field="*{text}" />
-                <span  th:errors="*{text}" class="error"></span>
+                <label th:for="text">Contribution:</label>
+                <textarea class="form-control contrib-text" th:field="${contribution.text}"/>
+                <span  th:errors="${contribution.text}" class="error"></span>
             </div>
 
             <input class="sign-up-submit" type="submit" value="Start Your Story" />

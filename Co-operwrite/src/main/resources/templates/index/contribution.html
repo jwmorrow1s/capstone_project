@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+
+<div th:replace="fragments :: navigation"></div>
+<body>
+<div class="container">
+    <form class="mt-5" method="POST">
+        <h2 class="text-center">Contribute to Story</h2>
+        <div class="form-group col-8">
+            <label th:for="text">Contribution:</label>
+            <textarea class="form-control" th:field="${contribution.text}"/>
+            <span  th:errors="${contribution.text}" class="error"></span>
+        </div>
+
+        <input class="sign-up-submit" type="submit" value="Submit" />
+    </form>
+</div><!--/container-->
+    <div class="empty-space"></div>
+    <div class="empty-space"></div>
+<div th:replace="fragments :: footer"></div>
+</body>
+</html>

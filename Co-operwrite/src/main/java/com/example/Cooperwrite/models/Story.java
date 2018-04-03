@@ -5,8 +5,8 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.List;
-//TODO
 
 @Entity
 public class Story {
@@ -18,19 +18,23 @@ public class Story {
     @Size(min = 3, max = 50)
     private String title;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)//???
     @JoinColumn(name = "story_id")
-    private List<Contribution> contributions;
+    private List<Contribution> contributions = new ArrayList<>();
 
     @Min(3)
     @Max(20)
     private int turns;
 
+    private int turn;
+
+    private boolean active;
+
     public Story(){}
 
     public Story(String title, int turns){
         this.title = title;
-        this.turns = (turns < 3) ? 3 : turns;
+        this.turns = (turn < 3) ? 3 : turns;
     }
 
     public int getId() {
@@ -49,16 +53,36 @@ public class Story {
         this.contributions.add(contribution);
     }
 
-    public int getTurns() {
-        return turns;
+    public int getTurn() {
+        return turn;
     }
 
-    public void setTurns(int turns) {
-        this.turns = turns;
+    public void setTurn(int turn) {
+        this.turn = turn;
     }
 
     public List<Contribution> getContributions(){
         return contributions;
     }
 
+    public void setContributions(List<Contribution> contributions)
+    {
+        this.contributions = contributions;
+    }
+
+    public boolean isActive(){
+        return active;
+    }
+
+    public void setActive(boolean active){
+        this.active = active;
+    }
+
+    public int getTurns(){
+        return turns;
+    }
+
+    public void setTurns(int turns){
+        this.turns = turns;
+    }
 }

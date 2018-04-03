@@ -35,8 +35,8 @@ public class IndexController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index(Model model){
         //TEMPORARY: locate the active story and set it as the global var
-        if(activeUser != null && !(activeUser.getContributions().isEmpty())){
-            List<Contribution> contributions = activeUser.getContributions();
+        if(activeUser != null){
+            List<Contribution> contributions = contributionDao.findAll();
             for(Contribution c : contributions){
                 Story story = c.getStory();
                 if(story.isActive()){
@@ -151,62 +151,36 @@ public class IndexController {
 
         if(email1 != null){
             User us1 = userDao.findByEmail(email1);
+            us1.setTurn(1);
+            /*
             Contribution cont1 = new Contribution("");
             cont1.setCardinality(1);
             checkStory.addContribution(cont1);
             us1.addContribution(cont1);
-            us1.setTurn(1);
             cont1.setUser(us1);
             cont1.setStory(checkStory);
             contributionDao.save(cont1);
+            */
             userDao.save(us1);
         }
         if(email2 != null){
             User us2 = userDao.findByEmail(email2);
-            Contribution cont2 = new Contribution("");
-            cont2.setCardinality(2);
-            checkStory.addContribution(cont2);
-            us2.addContribution(cont2);
             us2.setTurn(2);
-            cont2.setUser(us2);
-            cont2.setStory(checkStory);
-            contributionDao.save(cont2);
             userDao.save(us2);
         }
         if(email3 != null){
             User us3 = userDao.findByEmail(email3);
-            Contribution cont3 = new Contribution("");
-            cont3.setCardinality(3);
-            checkStory.addContribution(cont3);
-            us3.addContribution(cont3);
             us3.setTurn(3);
-            cont3.setUser(us3);
-            cont3.setStory(checkStory);
-            contributionDao.save(cont3);
             userDao.save(us3);
         }
         if(email4 != null){
             User us4 = userDao.findByEmail(email4);
-            Contribution cont4 = new Contribution("");
-            cont4.setCardinality(4);
-            checkStory.addContribution(cont4);
-            us4.addContribution(cont4);
             us4.setTurn(4);
-            cont4.setUser(us4);
-            cont4.setStory(checkStory);
-            contributionDao.save(cont4);
             userDao.save(us4);
         }
         if(email5 != null){
             User us5 = userDao.findByEmail(email5);
-            Contribution cont5 = new Contribution("");
-            cont5.setCardinality(5);
-            checkStory.addContribution(cont5);
-            us5.addContribution(cont5);
             us5.setTurn(5);
-            cont5.setUser(us5);
-            cont5.setStory(checkStory);
-            contributionDao.save(cont5);
             userDao.save(us5);
         }
         return "redirect:/";
@@ -223,21 +197,33 @@ public class IndexController {
 
     @RequestMapping(value = "/contribution", method = RequestMethod.GET)
     public String displayContributionForm(Model model){
-        if(!(activeUser.getTurn() == activeStory.getTurn())) return "redirect:/index";
+        if(activeUser == null || activeStory == null) return "redirect:/index";
+        if(!(activeUser.getTurn() == activeStory.getTurn())){
+            return "redirect:/index";
+        }
         model.addAttribute("activeUser", activeUser);
         model.addAttribute("activeStory", activeStory);
-        Contribution contribution = contributionDao.findByStoryIdAndUserId(activeStory.getId(), activeUser.getId());
-        model.addAttribute("contribution", contribution);
+        model.addAttribute(new Contribution());
         return "index/contribution";
     }
 
     @RequestMapping(value = "/contribution", method = RequestMethod.POST)
     public String processContribForm(@ModelAttribute  @Valid Contribution checkContribution,
                                      Errors errors, Model model) {
+        if(activeStory.getTurn() == activeStory.getTurns() - 1) activeStory.setActive(false);
         activeStory.setTurn(activeStory.getTurn() + 1);
+        checkContribution.setCardinality(activeUser.getTurn());
+        activeStory.addContribution(checkContribution);
+        activeUser.addContribution(checkContribution);
+        checkContribution.setStory(activeStory);
+        checkContribution.setUser(activeUser);
         contributionDao.save(checkContribution);
+        userDao.save(activeUser);
         storyDao.save(activeStory);
-        return "index/contribution";
+        model.addAttribute("activeUser", activeUser);
+        model.addAttribute("activeStory", activeStory);
+        List<Contribution> currentStory = contributionDao.findAllByStoryIdOrderByCardinality(activeStory.getId());
+        return "redirect:/story";
     }
 
 }
