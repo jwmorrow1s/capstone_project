@@ -152,15 +152,6 @@ public class IndexController {
         if(email1 != null){
             User us1 = userDao.findByEmail(email1);
             us1.setTurn(1);
-            /*
-            Contribution cont1 = new Contribution("");
-            cont1.setCardinality(1);
-            checkStory.addContribution(cont1);
-            us1.addContribution(cont1);
-            cont1.setUser(us1);
-            cont1.setStory(checkStory);
-            contributionDao.save(cont1);
-            */
             userDao.save(us1);
         }
         if(email2 != null){
